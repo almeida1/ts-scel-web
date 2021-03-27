@@ -19,43 +19,46 @@ import com.fatec.scel.model.Endereco;
 import com.fatec.scel.servico.AlunoServico;
 
 @Controller
-@RequestMapping(path = "/alunos")
+@RequestMapping(path = "/sig")
 public class AlunoController {
 	Logger logger = LogManager.getLogger(AlunoController.class);
 	@Autowired
 	AlunoServico servico;
 
-	@GetMapping("/consulta")
+	@GetMapping("/alunos")
 	public ModelAndView retornaFormDeConsultaTodosAlunos() {
 		ModelAndView modelAndView = new ModelAndView("consultarAluno");
 		modelAndView.addObject("alunos", servico.findAll());
 		return modelAndView;
 	}
 
-	@GetMapping("/cadastrar")
+	@GetMapping("/aluno")
 	public ModelAndView retornaFormCadastraDe(Aluno aluno) {
 		ModelAndView mv = new ModelAndView("cadastrarAluno");
 		mv.addObject("aluno", aluno);
 		return mv;
 	}
 
-	@GetMapping("/edit/{ra}") // diz ao metodo que ira responder a uma requisicao do tipo get
+	@GetMapping("/alunos/{ra}") // diz ao metodo que ira responder a uma requisicao do tipo get
 	public ModelAndView retornaFormParaEditarAluno(@PathVariable("ra") String ra) {
+		logger.info(">>>>>> retorna form para edicao com dados carregados findBtRa");
 		ModelAndView modelAndView = new ModelAndView("atualizarAluno");
 		modelAndView.addObject("aluno", servico.findByRa(ra)); // o repositorio e injetado no controller
 		return modelAndView; // addObject adiciona objetos para view
 	}
 
-	@GetMapping("/delete/{id}")
+	@GetMapping("/aluno/{id}")
 	public ModelAndView excluirNoFormDeConsultaTodosAlunos(@PathVariable("id") Long id) {
+		logger.info(">>>>>> retorna form de consulta sem o registro que foi excluido");
 		servico.deleteById(id);
 		ModelAndView modelAndView = new ModelAndView("consultarAluno");
 		modelAndView.addObject("alunos", servico.findAll());
 		return modelAndView;
 	}
 
-	@PostMapping("/save")
+	@PostMapping("/alunos")
 	public ModelAndView save(@Valid Aluno aluno, BindingResult result) {
+		logger.info(">>>>>> cadastrar aluno no db - save");
 		ModelAndView modelAndView = new ModelAndView("consultarAluno");
 		if (result.hasErrors()) {
 			modelAndView.setViewName("cadastrarAluno");
@@ -80,9 +83,9 @@ public class AlunoController {
 		return modelAndView;
 	}
 
-	@PostMapping("/update/{id}")
+	@PostMapping("/alunos/{id}")
 	public ModelAndView atualizaAluno(@PathVariable("id") Long id, @Valid Aluno aluno, BindingResult result) {
-
+		logger.info(">>>>>> retorna form de consulta com os dados de alunos atualizado");
 		if (result.hasErrors()) {
 			aluno.setId(id);
 			return new ModelAndView("atualizarAluno");

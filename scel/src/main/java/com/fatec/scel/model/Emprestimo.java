@@ -6,10 +6,15 @@ import java.text.SimpleDateFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+
 
 @Entity
 public class Emprestimo {
@@ -25,12 +30,14 @@ public class Emprestimo {
 	private String dataEmprestimo;
 	private String dataDevolucao;
 	private String dataDevolucaoPrevista;
+	
 
 	public Emprestimo(String isbn, String ra) {
 		this.isbn = isbn;
 		this.ra = ra;
 		DateTime dataAtual = new DateTime();
 		setDataEmprestimo(dataAtual);
+		setDataDevolucaoPrevista();
 	}
 
 	public Emprestimo() {
@@ -68,7 +75,7 @@ public class Emprestimo {
 	public void setDataEmprestimo(DateTime dataAtual) {
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("YYYY/MM/dd");
 		this.dataEmprestimo = dataAtual.toString(fmt);
-		setDataDevolucaoPrevista();
+	
 	}
 
 	public String getDataDevolucao() {
@@ -79,15 +86,14 @@ public class Emprestimo {
 		this.dataDevolucao = dataDevolucao;
 	}
 
-	private void setDataDevolucaoPrevista() {
+	public void setDataDevolucaoPrevista() {
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("YYYY/MM/dd");
 		DateTime data = fmt.parseDateTime(getDataEmprestimo());
 		this.dataDevolucaoPrevista = data.plusDays(8).toString(fmt);
+		
 	}
 
-	public void setDataDevolucaoPrevista(String dataDevolucaoPrevista) {
-		this.dataDevolucaoPrevista = dataDevolucaoPrevista;
-	}
+
 
 	public boolean ehDomingo(String data) {
 		boolean isValida = false;
@@ -99,6 +105,14 @@ public class Emprestimo {
 			}
 		}
 		return isValida;
+	}
+
+	public String getDataDevolucaoPrevista() {
+		return dataDevolucaoPrevista;
+	}
+
+	public void setDataEmprestimo(String dataEmprestimo) {
+		this.dataEmprestimo = dataEmprestimo;
 	}
 
 	public boolean validaData(String data) {

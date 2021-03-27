@@ -17,34 +17,34 @@ import com.fatec.scel.model.Livro;
 import com.fatec.scel.servico.LivroServico;
 
 @Controller
-@RequestMapping(path = "/livros")
+@RequestMapping(path = "/sig")
 public class LivroController {
 	Logger logger = LogManager.getLogger(LivroController.class);
 	@Autowired
 	LivroServico servico;
 
-	@GetMapping("/consultar")
+	@GetMapping("/livros")
 	public ModelAndView retornaFormDeConsultaTodosLivros() {
 		ModelAndView modelAndView = new ModelAndView("consultarLivro");
 		modelAndView.addObject("livros", servico.findAll());
 		return modelAndView;
 	}
 
-	@GetMapping("/cadastrar")
+	@GetMapping("/livro")
 	public ModelAndView retornaFormDeCadastroDe(Livro livro) {
 		ModelAndView mv = new ModelAndView("cadastrarLivro");
 		mv.addObject("livro", livro);
 		return mv;
 	}
 
-	@GetMapping("/edit/{isbn}") // diz ao metodo que ira responder a uma requisicao do tipo get
+	@GetMapping("/livros/{isbn}") // diz ao metodo que ira responder a uma requisicao do tipo get
 	public ModelAndView retornaFormParaEditarLivro(@PathVariable("isbn") String isbn) {
 		ModelAndView modelAndView = new ModelAndView("atualizarLivro");
 		modelAndView.addObject("livro", servico.findByIsbn(isbn)); // o repositorio e injetado no controller
 		return modelAndView; // addObject adiciona objetos para view
 	}
 
-	@GetMapping("/delete/{id}")
+	@GetMapping("/livro/{id}")
 	public ModelAndView excluiNoFormDeConsultaLivro(@PathVariable("id") Long id) {
 		servico.deleteById(id);
 		ModelAndView modelAndView = new ModelAndView("consultarLivro");
@@ -52,7 +52,7 @@ public class LivroController {
 		return modelAndView;
 	}
 
-	@PostMapping("/save")
+	@PostMapping("/livros")
 	public ModelAndView save(@Valid Livro livro, BindingResult result) {
 		ModelAndView modelAndView = new ModelAndView("consultarLivro");
 		if (result.hasErrors()) {
@@ -70,7 +70,7 @@ public class LivroController {
 		return modelAndView;
 	}
 
-	@PostMapping("/update/{id}")
+	@PostMapping("/livros/{id}")
 	public ModelAndView atualizaLivro(@PathVariable("id") Long id, @Valid Livro livro, BindingResult result) {
 		if (result.hasErrors()) {
 			livro.setId(id);

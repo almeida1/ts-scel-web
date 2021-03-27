@@ -1,6 +1,8 @@
 package com.fatec.scel.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,6 +10,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +26,7 @@ import com.fatec.scel.servico.EmprestimoServico;
 import com.fatec.scel.servico.LivroServico;
 
 @Controller
-@RequestMapping(path = "/emprestimos")
+@RequestMapping(path = "/sig")
 public class EmprestimoController {
 	Logger logger = LogManager.getLogger(EmprestimoController.class);
 	@Autowired
@@ -32,21 +35,34 @@ public class EmprestimoController {
 	private LivroServico livroServico;
 	@Autowired
 	private AlunoServico alunoServico;
+	
+	@GetMapping("/emprestimos")
+	public ModelAndView retornaFormDeConsultaTodosAlunos() {
+		logger.info("==============> retorna form consultarEmprestimo ");
+		ModelAndView modelAndView = new ModelAndView("consultarEmprestimo");
+		Iterable<Emprestimo> emprestimo = emprestimoServico.findAll();
+		if (emprestimo != null) System.out.println(">>>>>>>>> emprestimo nao nulo");
+		emprestimo.forEach(e -> {if (e.getDataDevolucaoPrevista() != null) System.out.println(">>>>>>>" + e.getDataDevolucaoPrevista());});
+		modelAndView.addObject("emprestimos", emprestimoServico.findAll());
+		
+		logger.info("==============> carregou objeto emprestimos com dados ");
+		return modelAndView;
+	}
 
-	@GetMapping("/registrar")
+	@GetMapping("/emprestimo")
 	public ModelAndView registrarEmprestimo(Emprestimo emprestimo) {
-		logger.info("==============> chamada do menu para classe controller");
+		logger.info("==============> retorna form registrarEmprestimo chamada da classe controller");
 		ModelAndView mv = new ModelAndView("registrarEmprestimo");
 		mv.addObject("emprestimo", emprestimo);
 		return mv;
 	}
 
-	@PostMapping("/save")
+	@PostMapping("/emprestimos")
 	public ModelAndView save(@Valid Emprestimo emprestimo, BindingResult result) {
-		logger.info("=================> chamada da pagina registrar emprestimo para controller");
+		logger.info("retorna o form registrarEmprestimo com a mensagem emprestimo registrado");
 		ModelAndView modelAndView = new ModelAndView("registrarEmprestimo");
 		if (result.hasErrors()) {
-			logger.info("======================> entrada de dados invalida na pagina registrar emprestimo");
+			logger.info("entrada de dados invalida na pagina registrar emprestimo");
 			return modelAndView;
 		}
 		try {
@@ -63,24 +79,33 @@ public class EmprestimoController {
 			}
 			if ((livro != null && aluno != null && emprestimos == null)
 					|| (livro != null && aluno != null && emprestimoEmAberto == false)) {
-				logger.info("======================> achou livro/aluno no db e nao existe emprestimo cadastrado");
+				logger.info(" achou livro/aluno no db e nao existe emprestimo cadastrado");
 				DateTime dataAtual = new DateTime();
 				emprestimo.setDataEmprestimo(dataAtual);
+				emprestimo.setDataDevolucaoPrevista();
 				emprestimoServico.save(emprestimo);
 				modelAndView.addObject("message", "Emprestimo registrado");
 			} else {
-				logger.info("======================> não achou livro/aluno no db");
-				modelAndView.addObject("message", "Livro/Aluno não localizado ou emprestimo em aberto");
+				logger.info("não achou livro/aluno no db");
+				modelAndView.addObject("message", "Livro/Aluno não localizado ou existe emprestimo em aberto");
 			}
 		} catch (Exception e) {
 			logger.info("erro nao esperado no cadastro de emprestimo ===> " + e.getMessage());
 		}
 		return modelAndView;
 	}
+	
 
-	@GetMapping("/delete/{id}")
-	public ModelAndView delete(@PathVariable("id") Long id) {
-		emprestimoServico.deleteById(id);
+	@GetMapping("/emprestimos/{id}")
+	public ModelAndView devolucao(@PathVariable("id") Long id) {
+		logger.info("retorna o form de consulta emprestimo com a baixa registrada");
+		Optional<Emprestimo> optionalEmprestimo = emprestimoServico.findById(id);
+		Emprestimo emprestimo = optionalEmprestimo.get();
+		
+		DateTime dataAtual = new DateTime();
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("YYYY/MM/dd");
+		emprestimo.setDataDevolucao(dataAtual.toString(fmt));
+		emprestimoServico.save(emprestimo);
 		ModelAndView modelAndView = new ModelAndView("consultarEmprestimo");
 		modelAndView.addObject("emprestimos", emprestimoServico.findAll());
 		return modelAndView;

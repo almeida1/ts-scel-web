@@ -12,10 +12,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/aluno/cadastrar").hasAnyRole("ADMIN", "BIB") //
-				                .antMatchers("/livros/cadastrar").hasRole("BIB") // somente login maria
-				.anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll().and().logout()
-				.logoutSuccessUrl("/login?logout").permitAll();
+		http.authorizeRequests()
+			.antMatchers("/aluno/cadastrar").hasAnyRole("ADMIN", "BIB") //
+			.antMatchers("/livros/cadastrar").hasRole("BIB") // somente login maria
+			.anyRequest().authenticated()
+			.and()
+			.formLogin().loginPage("/login").permitAll().and().logout()
+			.logoutUrl("/login?logout").permitAll();
 	}
 
 	@Override

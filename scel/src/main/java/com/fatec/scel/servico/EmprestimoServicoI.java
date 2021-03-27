@@ -1,6 +1,8 @@
 package com.fatec.scel.servico;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fatec.scel.model.Emprestimo;
@@ -25,5 +27,9 @@ public class EmprestimoServicoI implements EmprestimoServico {
 
 	public List findByIsbnRa(String isbn, String ra) {
 		return emprestimoRepository.findByIsbnRa(isbn, ra);
+	}
+	
+	public Optional<Emprestimo> findById(Long id) {
+		return emprestimoRepository.findById(id);
 	}
 }

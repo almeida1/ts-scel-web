@@ -2,19 +2,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width" />
-<title>Lista de alunos</title>
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet"></link>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width" />
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>Lista de alunos</title>
+	<link
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		rel="stylesheet"></link>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width" />
 <body>
+	<header th:replace="fragments/header :: menuSuperior">
+		<div>header</div>
+	</header>
 	<div class="panel panel-default" style="margin: 10px">
 		<div class="panel-heading">
 			<h2 class="panel-title">Lista de alunos</h2>
@@ -48,9 +51,9 @@
 							<td>
 								<div class="btn-group pull-right">
 									<a class="btn btn-sm btn-primary"
-										th:href="@{/alunos/edit/{ra}(ra=${aluno.ra})}">Editar</a> <a
+										th:href="@{/sig/alunos/{ra}(ra=${aluno.ra})}">Editar</a> <a
 										class="delete btn btn-sm btn-danger"
-										th:href="@{/alunos/delete/{id}(id=${aluno.id})}">Excluir</a>
+										th:href="@{/sig/aluno/{id}(id=${aluno.id})}">Excluir</a>
 								</div>
 							</td>
 						</tr>
