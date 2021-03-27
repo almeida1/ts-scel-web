@@ -37,21 +37,17 @@ public class EmprestimoController {
 	private AlunoServico alunoServico;
 	
 	@GetMapping("/emprestimos")
-	public ModelAndView retornaFormDeConsultaTodosAlunos() {
-		logger.info("==============> retorna form consultarEmprestimo ");
+	public ModelAndView consultaEmprestimo() {
+		logger.info("1. form consultarEmprestimo chamado ");
 		ModelAndView modelAndView = new ModelAndView("consultarEmprestimo");
-		Iterable<Emprestimo> emprestimo = emprestimoServico.findAll();
-		if (emprestimo != null) System.out.println(">>>>>>>>> emprestimo nao nulo");
-		emprestimo.forEach(e -> {if (e.getDataDevolucaoPrevista() != null) System.out.println(">>>>>>>" + e.getDataDevolucaoPrevista());});
 		modelAndView.addObject("emprestimos", emprestimoServico.findAll());
-		
-		logger.info("==============> carregou objeto emprestimos com dados ");
+		logger.info("2. carregou objeto emprestimos com dados ");
 		return modelAndView;
 	}
 
 	@GetMapping("/emprestimo")
 	public ModelAndView registrarEmprestimo(Emprestimo emprestimo) {
-		logger.info("==============> retorna form registrarEmprestimo chamada da classe controller");
+		logger.info("retorna form registrarEmprestimo chamada da classe controller");
 		ModelAndView mv = new ModelAndView("registrarEmprestimo");
 		mv.addObject("emprestimo", emprestimo);
 		return mv;
@@ -59,7 +55,7 @@ public class EmprestimoController {
 
 	@PostMapping("/emprestimos")
 	public ModelAndView save(@Valid Emprestimo emprestimo, BindingResult result) {
-		logger.info("retorna o form registrarEmprestimo com a mensagem emprestimo registrado");
+		logger.info("registra o emprestimo - save");
 		ModelAndView modelAndView = new ModelAndView("registrarEmprestimo");
 		if (result.hasErrors()) {
 			logger.info("entrada de dados invalida na pagina registrar emprestimo");

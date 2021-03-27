@@ -32,7 +32,11 @@ class REQ04RegistrarEmprestimoTests {
 
 	@Test
 	void quando_data_atual_eh_hoje_data_devolucao_eh_hoje_mais_oito_dias() {
-        Emprestimo emprestimo = new Emprestimo("1111", "2222");
+		//Iterable<Emprestimo> emprestimo = emprestimoServico.findAll();
+		//if (emprestimo != null) System.out.println(">>>>>>>>> emprestimo nao nulo");
+		//emprestimo.forEach(e -> {if (e.getDataDevolucaoPrevista() != null) System.out.println(">>>>>>>" + e.getDataDevolucaoPrevista());});
+		Emprestimo emprestimo = new Emprestimo("1111", "2222");
+        
         DateTime dataAtual = new DateTime();
         emprestimo.setDataEmprestimo(dataAtual);
         emprestimo.setDataDevolucaoPrevista();
