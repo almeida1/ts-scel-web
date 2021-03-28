@@ -60,7 +60,7 @@ public class AlunoController {
 
 	@PostMapping("/alunos")
 	public ModelAndView save(@Valid Aluno aluno, BindingResult result) {
-		logger.info(">>>>>> 3. cadastrar aluno no db - save");
+		logger.info(">>>>>> 2. cadastrar aluno no db - save");
 		ModelAndView modelAndView = new ModelAndView("consultarAluno");
 		if (result.hasErrors()) {
 			modelAndView.setViewName("cadastrarAluno");

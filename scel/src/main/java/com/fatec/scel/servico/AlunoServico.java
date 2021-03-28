@@ -33,7 +33,7 @@ public class AlunoServico {
 		try {
 			String endereco = obtemEndereco(aluno.getCep());
 			if (endereco != "") {
-				logger.info("consulta cep valido antes do save ==> " + endereco.toString());
+				logger.info(">>>>>> 4. cep valido antes do save ==> " + endereco.toString());
 				aluno.setEndereco(endereco);
 				repository.save(aluno);
 				modelAndView.addObject("alunos", repository.findAll());
@@ -42,7 +42,7 @@ public class AlunoServico {
 		} catch (Exception e) { // captura validacoes na camada de persistencia
 			modelAndView.setViewName("cadastrarAluno");
 			modelAndView.addObject("message", "Dados invalidos");
-			logger.error("erro nao esperado ==> " + e.getMessage());
+			logger.error(">>>>>> 4. erro nao esperado ==> " + e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -50,7 +50,7 @@ public class AlunoServico {
 		RestTemplate template = new RestTemplate();
 		String url = "https://viacep.com.br/ws/{cep}/json/";
 		Endereco endereco = template.getForObject(url, Endereco.class, cep);
-		logger.info(">>>>>>> 4. obtem endereco ==> " + endereco.toString());
+		logger.info(">>>>>>> 3. obtem endereco ==> " + endereco.toString());
 		return endereco.getLogradouro();
 	}
 	
