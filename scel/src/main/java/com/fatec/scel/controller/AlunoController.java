@@ -27,6 +27,7 @@ public class AlunoController {
 
 	@GetMapping("/alunos")
 	public ModelAndView retornaFormDeConsultaTodosAlunos() {
+		logger.info(" >>>>>> 2. Form consultar aluno chamado");
 		ModelAndView modelAndView = new ModelAndView("consultarAluno");
 		modelAndView.addObject("alunos", servico.findAll());
 		return modelAndView;
@@ -34,6 +35,7 @@ public class AlunoController {
 
 	@GetMapping("/aluno")
 	public ModelAndView retornaFormCadastraDe(Aluno aluno) {
+		logger.info(" >>>>>> 1. Form cadastrar aluno chamado pelo menu");
 		ModelAndView mv = new ModelAndView("cadastrarAluno");
 		mv.addObject("aluno", aluno);
 		return mv;
@@ -58,27 +60,12 @@ public class AlunoController {
 
 	@PostMapping("/alunos")
 	public ModelAndView save(@Valid Aluno aluno, BindingResult result) {
-		logger.info(">>>>>> cadastrar aluno no db - save");
+		logger.info(">>>>>> 3. cadastrar aluno no db - save");
 		ModelAndView modelAndView = new ModelAndView("consultarAluno");
 		if (result.hasErrors()) {
 			modelAndView.setViewName("cadastrarAluno");
 		} else {
-			
-			try {
-				String endereco = obtemEndereco(aluno.getCep());
-				if (endereco != "") {
-					logger.info("consulta cep valido antes do save ==> " + endereco.toString());
-					aluno.setEndereco(endereco);
-					servico.save(aluno);
-					modelAndView.addObject("alunos", servico.findAll());
-					
-				}
-
-			} catch (Exception e) { // captura validacoes na camada de persistencia
-				modelAndView.setViewName("cadastrarAluno");
-				modelAndView.addObject("message", "Dados invalidos");
-				logger.error("erro nao esperado ==> " + e.getMessage());
-			}
+			modelAndView = servico.save(aluno);
 		}
 		return modelAndView;
 	}
@@ -100,11 +87,5 @@ public class AlunoController {
 		return modelAndView;
 	}
 
-	public String obtemEndereco(String cep) {
-		RestTemplate template = new RestTemplate();
-		String url = "https://viacep.com.br/ws/{cep}/json/";
-		Endereco endereco = template.getForObject(url, Endereco.class, cep);
-		logger.info("obtem endereco ==> " + endereco.toString());
-		return endereco.getLogradouro();
-	}
+	
 }
