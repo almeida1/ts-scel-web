@@ -3,7 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Update User</title>
+<title>Atualizar aluno</title>
+<script type="text/javascript">
+	function consulta() {
+		window.open("/alunos/consulta");
+	}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -25,7 +30,7 @@
 			<div class="card-body">
 				<div class="col-md-8">
 					<form action="#"
-						th:action="@{/alunos/update/{id} (id=${aluno.id}) }"
+						th:action="@{/sig/alunos/{id} (id=${aluno.id}) }"
 						th:object="${aluno}" method="post">
 						<div class="row">
 							<div class="form-group col-md-4">
@@ -68,8 +73,8 @@
 									th:errors="*{endereco}" class="text-danger"></span>
 							</div>
 							<div class="form-group col-md-8">
-								<input type="submit" class="btn btn-primary"
-									value="Atualizar Aluno">
+								<input type="submit" class="btn btn-primary" value="Atualizar Aluno">
+								<input type="button" class="btn btn-primary" value="Consultar aluno" onclick="consulta();">
 							</div>
 						</div>
 					</form>

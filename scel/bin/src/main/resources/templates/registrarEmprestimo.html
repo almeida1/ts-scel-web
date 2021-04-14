@@ -6,8 +6,9 @@
 <title>Registrar Emprestimo</title>
 <script type="text/javascript">
 	function consulta() {
-		window.open("consulta");
+		window.open("/sig/emprestimos");
 	}
+	
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -26,11 +27,11 @@
 	<div class="container my-5">
 	<br/>
 	
-		<h3>Registrar Emprestimo</h3>
+		<h3>Registrar/Consultar Empréstimo de Livro</h3>
 		<div class="card">
 			<div class="card-body">
 				<div class="col-md-8">
-					<form action="#" th:action="@{/emprestimos/save}" th:object="${emprestimo}" 	method="post">
+					<form action="#" th:action="@{/sig/emprestimos}" th:object="${emprestimo}" 	method="post">
 						<div class="row">
 
 							<div class="form-group col-md-4">
@@ -51,7 +52,9 @@
 
 							<div class="form-group col-md-8">
 								<input type="submit" class="btn btn-primary" value="Confirmar"> 
-								<input type="button" class="btn btn-primary" value="Cancelar" onclick="consulta();">
+								<input type="button" class="btn btn-primary" value="Consultar" onclick="consulta();">
+								
+								
 							</div>
 						
 						</div>
