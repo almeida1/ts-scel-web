@@ -81,7 +81,10 @@ public class AlunoController {
 		umAluno.setRa(aluno.getRa());
 		umAluno.setNome(aluno.getNome());
 		umAluno.setEmail(aluno.getEmail());
+		umAluno.setCep(aluno.getCep());
+		umAluno.setEndereco(servico.obtemEndereco(aluno.getCep()));
 		servico.save(umAluno);
+		logger.info(">>>>>> controller aluno atualizado");
 		ModelAndView modelAndView = new ModelAndView("consultarAluno");
 		modelAndView.addObject("alunos", servico.findAll());
 		return modelAndView;
