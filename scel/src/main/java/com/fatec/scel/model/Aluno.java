@@ -22,16 +22,15 @@ public class Aluno {
 	@NotNull
 	@Size(min = 8, max = 8, message = "CEP deve ter 8 caracteres")
 	private String cep;
-	// @NotNull
-	// @Size(min = 1, max = 50, message="Titulo deve ter entre 1 e 50 caracteres")
+	
 	private String endereco;
 
-	public Aluno(String ra, String nome, String email, String cep, String endereco) {
+	public Aluno(String ra, String nome, String email, String cep) {
 		this.ra = ra;
 		this.nome = nome;
 		this.email = email;
 		this.cep = cep;
-		this.endereco = endereco;
+		
 	}
 
 	public Aluno() {
