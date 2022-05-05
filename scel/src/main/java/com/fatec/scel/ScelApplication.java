@@ -7,9 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.fatec.scel.model.Aluno;
-import com.fatec.scel.model.AlunoRepository;
 import com.fatec.scel.model.Livro;
 import com.fatec.scel.model.LivroRepository;
+import com.fatec.scel.servico.AlunoServico;
 
 @SpringBootApplication
 public class ScelApplication {
@@ -17,7 +17,7 @@ public class ScelApplication {
 	@Autowired
 	LivroRepository livroRepository;
 	@Autowired
-	AlunoRepository alunoRepository;
+	AlunoServico alunoServico;
 	public static void main(String[] args) {
 		SpringApplication.run(ScelApplication.class, args);
 	}
@@ -28,7 +28,7 @@ public class ScelApplication {
 		Livro umLivro = livroRepository.findByIsbn("1111");
 		logger.info(">>>>>> inicializacao da aplicacao =>  " + umLivro.toString());
 		Aluno aluno = new Aluno ("aaaa", "Jose", "jose@gmail.com","03694000");
-		alunoRepository.save(aluno);
+		alunoServico.save(aluno);
 	}
 
 }
