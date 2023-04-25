@@ -13,7 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.springframework.boot.test.context.SpringBootTest;
+
 //@SpringBootTest
 public class REQ03MantemAlunoTests {
 	private WebDriver driver;
@@ -24,8 +24,8 @@ public class REQ03MantemAlunoTests {
 	public void setUp() {
 		System.setProperty("webdriver.chrome.driver", "browserDriver/chromedriver.exe");
 		driver = new ChromeDriver();
-		driver.get("https://scel.herokuapp.com/login");
-		//driver.get("http://localhost:8080");//http://localhost:8080/login
+		//driver.get("https://scel.herokuapp.com/login");
+		driver.get("http://localhost:8080");//http://localhost:8080/login
 		driver.manage().window().maximize();
 		js = (JavascriptExecutor) driver;
 		vars = new HashMap<String, Object>();
@@ -64,7 +64,7 @@ public class REQ03MantemAlunoTests {
 		assertTrue(driver.getPageSource().contains("Rua Frei João"));
 		
 		assertEquals(("Lista de alunos"), driver.findElement(By.id("titulopagina")).getText());
-		assertEquals("https://scel.herokuapp.com/sig/alunos", driver.getCurrentUrl());
+		assertEquals("http://localhost:8080/sig/alunos", driver.getCurrentUrl());
 		assertTrue(driver.getPageSource().contains("1111"));
 		// *********************************************************************************
 		// teardown - exclusao do registro
