@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import com.fatec.scel.model.Endereco;
-import com.fatec.scel.model.Livro;
 import com.fatec.scel.model.Aluno;
 import com.fatec.scel.model.AlunoRepository;
 @Service

@@ -12,7 +12,7 @@ public interface EmprestimoServico {
 
 	public void deleteById(Long id);
 
-	public List findByIsbnRa(String isbn, String ra);
+	public List<Emprestimo> findByIsbnRa(String isbn, String ra);
 	
 	public Optional<Emprestimo> findById(Long id);
 }

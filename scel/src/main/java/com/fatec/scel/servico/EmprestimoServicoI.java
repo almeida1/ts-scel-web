@@ -25,7 +25,7 @@ public class EmprestimoServicoI implements EmprestimoServico {
 		emprestimoRepository.deleteById(id);
 	}
 
-	public List findByIsbnRa(String isbn, String ra) {
+	public List<Emprestimo> findByIsbnRa(String isbn, String ra) {
 		return emprestimoRepository.findByIsbnRa(isbn, ra);
 	}
 	
