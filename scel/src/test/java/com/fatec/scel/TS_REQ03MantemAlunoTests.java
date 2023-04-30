@@ -15,7 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 //@SpringBootTest
-public class REQ03MantemAlunoTests {
+public class TS_REQ03MantemAlunoTests {
 	private WebDriver driver;
 	private Map<String, Object> vars;
 	JavascriptExecutor js;
@@ -24,8 +24,7 @@ public class REQ03MantemAlunoTests {
 	public void setUp() {
 		System.setProperty("webdriver.chrome.driver", "browserDriver/chromedriver.exe");
 		driver = new ChromeDriver();
-		//driver.get("https://scel.herokuapp.com/login");
-		driver.get("http://localhost:8080");//http://localhost:8080/login
+		driver.get("http://localhost:8080");
 		driver.manage().window().maximize();
 		js = (JavascriptExecutor) driver;
 		vars = new HashMap<String, Object>();
@@ -74,7 +73,7 @@ public class REQ03MantemAlunoTests {
 	}
 
 	@Test
-	public void ct02_atualiza_aluno_com_sucesso() {
+	public void ct02_atualiza_cep_do_endereco_com_sucesso() {
 		// ***********************************************************************************
 		// dado que o aluno esta cadastrado
 		// ***********************************************************************************
@@ -101,7 +100,9 @@ public class REQ03MantemAlunoTests {
 		driver.findElement(By.id("cep")).clear();
 		driver.findElement(By.id("cep")).sendKeys("08545160");
 		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		// ************************************************************************************
 		// entao o sistema apresenta as informações do aluno com o CEP alterado
+		// ************************************************************************************
 		assertTrue(driver.getPageSource().contains("Rua João Soliman"));
 		// ************************************************************************************
 		// teardown - exclusao do registro
@@ -134,9 +135,6 @@ public class REQ03MantemAlunoTests {
 		assertEquals("Dados invalidos", driver.findElement(By.cssSelector(".text-danger")).getText());
 		
 	}
-
-	
-
 	public void espera() {
 		try {
 			Thread.sleep(4000);

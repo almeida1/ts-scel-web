@@ -1,6 +1,7 @@
 package com.fatec.scel;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
@@ -9,13 +10,13 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fatec.scel.model.Emprestimo;
 import com.fatec.scel.model.EmprestimoRepository;
 
-@DataJpaTest
-class REQ04RegistrarEmprestimoTests {
+@SpringBootTest
+class TI_REQ04RegistrarEmprestimoTests {
 	@Autowired
 	private EmprestimoRepository emprestimoRepository;
 
