@@ -16,7 +16,7 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>8</java.version>
+		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
@@ -78,7 +78,7 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator-annotation-processor</artifactId>
-			<version>6.0.2.Final</version>
+			
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
 		<dependency>
